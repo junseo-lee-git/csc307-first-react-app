@@ -2,12 +2,12 @@ import React from 'react';
 
 function TableHeader()  {
     return (
-        <thread>
+        <thead>
             <tr>
                 <th>Name</th>
                 <th>Job</th>
             </tr>
-        </thread>
+        </thead>
     );
 
 }
