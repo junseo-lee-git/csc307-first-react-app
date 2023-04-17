@@ -40,6 +40,16 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.post('/users', (req, res) => {
+    const userToAdd = req.body;
+    addUser(userToAdd);
+    res.status(200).end();
+});
+
+function addUser(user){
+    users['users_list'].push(user);
+}
+
 app.get('/users', (req, res) => {
     const name = req.query.name;
     if (name != undefined){
