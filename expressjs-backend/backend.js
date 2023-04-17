@@ -34,7 +34,7 @@ const users = {
     ]
  }
   
- app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // Hellow World!
@@ -46,15 +46,23 @@ app.get('/', (req, res) => {
 // POST functionality for adding users. No error handling yet
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.status(200).end();
+    const newUser = addUser(userToAdd);
+    res.status(201).send(newUser).end();
+
 });
 
 function addUser(user){
+    id = generateID();
+    user.id = id.toString();
     users['users_list'].push(user);
+    return user;
 }
 
-// DELETE functinality
+function generateID(){
+    return Math.floor(Math.random() * Math.floor(1000000));
+}
+
+// DELETE functionality
 app.delete('/users/:id', (req, res) => {
     const id = req.params['id']; //or req.params.id
     let result = findUserById(id);
@@ -62,6 +70,7 @@ app.delete('/users/:id', (req, res) => {
         res.status(404).send('Resource not found.');
     else {
         deleteUser(result);
+        res.status(204).end();
         res.send(users);
     }
 });
